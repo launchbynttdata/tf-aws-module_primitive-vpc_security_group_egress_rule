@@ -43,10 +43,10 @@ func TestComposableComplete(t *testing.T, ctx testTypes.TestContext) {
 	})
 }
 
-// TestComposableCompleteReadonly is the readonly test implementation. It
+// TestComposableCompleteReadOnly is the readonly test implementation. It
 // performs the same read-only verification as TestComposableComplete via
 // the EC2 API and must not create, update, or delete any resources.
-func TestComposableCompleteReadonly(t *testing.T, ctx testTypes.TestContext) {
+func TestComposableCompleteReadOnly(t *testing.T, ctx testTypes.TestContext) {
 	ec2Client := GetAWSEC2Client(t)
 
 	egressRuleId := terraform.Output(t, ctx.TerratestTerraformOptions(), "egress_rule_id")
