@@ -20,7 +20,33 @@ const (
 	failedToFindEgressRuleMsg   = "Failed to find egress rule"
 )
 
+// TestComposableComplete is the functional test implementation. It is run
+// as part of the setup/apply/teardown lifecycle and verifies the deployed
+// egress rule via the EC2 API.
 func TestComposableComplete(t *testing.T, ctx testTypes.TestContext) {
+	ec2Client := GetAWSEC2Client(t)
+
+	egressRuleId := terraform.Output(t, ctx.TerratestTerraformOptions(), "egress_rule_id")
+	securityGroupId := terraform.Output(t, ctx.TerratestTerraformOptions(), "security_group_id")
+	effectiveSource := terraform.Output(t, ctx.TerratestTerraformOptions(), "effective_source")
+
+	t.Run("TestSecurityGroupEgressRuleExists", func(t *testing.T) {
+		testSecurityGroupEgressRuleExists(t, ec2Client, securityGroupId, egressRuleId)
+	})
+
+	t.Run("TestSecurityGroupEgressRuleProperties", func(t *testing.T) {
+		testSecurityGroupEgressRuleProperties(t, ec2Client, securityGroupId, egressRuleId)
+	})
+
+	t.Run("TestEffectiveSource", func(t *testing.T) {
+		testEffectiveSource(t, effectiveSource)
+	})
+}
+
+// TestComposableCompleteReadOnly is the readonly test implementation. It
+// performs the same read-only verification as TestComposableComplete via
+// the EC2 API and must not create, update, or delete any resources.
+func TestComposableCompleteReadOnly(t *testing.T, ctx testTypes.TestContext) {
 	ec2Client := GetAWSEC2Client(t)
 
 	egressRuleId := terraform.Output(t, ctx.TerratestTerraformOptions(), "egress_rule_id")
