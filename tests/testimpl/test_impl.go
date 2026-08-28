@@ -23,9 +23,9 @@ const (
 func TestComposableComplete(t *testing.T, ctx testTypes.TestContext) {
 	ec2Client := GetAWSEC2Client(t)
 
-	egressRuleId := terraform.Output(t, ctx.TerratestTerraformOptions(), "egress_rule_id")
-	securityGroupId := terraform.Output(t, ctx.TerratestTerraformOptions(), "security_group_id")
-	effectiveSource := terraform.Output(t, ctx.TerratestTerraformOptions(), "effective_source")
+	egressRuleId := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "egress_rule_id")
+	securityGroupId := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "security_group_id")
+	effectiveSource := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "effective_source")
 
 	t.Run("TestSecurityGroupEgressRuleExists", func(t *testing.T) {
 		testSecurityGroupEgressRuleExists(t, ec2Client, securityGroupId, egressRuleId)
