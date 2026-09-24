@@ -25,7 +25,9 @@ const (
 	infraTFVarFileNameDefault        = "test.tfvars"
 )
 
-func TestSecurityGroupEgressRuleModule(t *testing.T) {
+// TestSecurityGroupEgressRuleModuleReadOnly validates deployed infrastructure
+// without creating, mutating, or destroying Terraform-managed resources.
+func TestSecurityGroupEgressRuleModuleReadOnly(t *testing.T) {
 
 	ctx := types.CreateTestContextBuilder().
 		SetTestConfig(&testimpl.ThisTFModuleConfig{}).
