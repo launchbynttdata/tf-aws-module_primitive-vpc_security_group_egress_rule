@@ -159,14 +159,14 @@ terraform destroy -var-file=test.tfvars
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 1.5.0 |
-| aws | ~> 5.100.0 |
+| terraform | >= 1.5.0, < 2.0.0 |
+| aws | ~> 5.100 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | ~> 5.100.0 |
+| aws | ~> 5.100 |
 
 ## Resources
 
@@ -217,7 +217,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0, < 2.0.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.100 |
 
 ## Modules
