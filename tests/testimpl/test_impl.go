@@ -21,6 +21,23 @@ const (
 )
 
 func TestComposableComplete(t *testing.T, ctx testTypes.TestContext) {
+	verifyEgressRuleReadOnly(t, ctx)
+}
+
+// TestComposableCompleteReadOnly is the readonly-test entrypoint. It runs
+// under lib.RunNonDestructiveTest against already-deployed infrastructure and
+// must not create, update, or delete anything -- it shares the same
+// read-only verification as the functional suite, but on its own distinct
+// implementation function per the TestComposable* naming lcaf-component-terratest
+// requires for non-destructive runs.
+func TestComposableCompleteReadOnly(t *testing.T, ctx testTypes.TestContext) {
+	verifyEgressRuleReadOnly(t, ctx)
+}
+
+// verifyEgressRuleReadOnly performs only read-only EC2 SDK calls
+// (DescribeSecurityGroups, DescribeSecurityGroupRules) and is safe to run
+// against infrastructure that must not be mutated.
+func verifyEgressRuleReadOnly(t *testing.T, ctx testTypes.TestContext) {
 	ec2Client := GetAWSEC2Client(t)
 
 	egressRuleId := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "egress_rule_id")
